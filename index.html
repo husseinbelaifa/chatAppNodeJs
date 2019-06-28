@@ -81,7 +81,8 @@
             //connect to socket io
 
             var socket = io.connect('http://localhost:4000');
-
+            console.log('socket');
+            console.log(socket);
             //check for connection
 
             if (socket !== undefined) {
@@ -128,6 +129,13 @@
 
                         event.preventDefault();
                     }
+                })
+
+
+                //handle chat clear
+
+                clearBtn.addEventListener('click', function (e) {
+                    socket.emit('clear');
                 })
 
 
