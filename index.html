@@ -116,6 +116,20 @@
 
                 })
 
+                //handle input 
+
+                textarea.addEventListener('keydown', function (e) {
+                    if (event.which === 13 && event.shiftKey === false) {
+                        //emit to server the input 
+                        socket.emit('input', {
+                            name: username.value,
+                            message: textarea.value
+                        });
+
+                        event.preventDefault();
+                    }
+                })
+
 
 
             }
