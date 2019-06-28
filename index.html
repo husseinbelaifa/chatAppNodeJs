@@ -27,7 +27,7 @@
 
                 </h1>
 
-                <div class="status">
+                <div id="status">
 
                 </div>
 
@@ -49,6 +49,28 @@
         </div>
     </div>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+
+    <script>
+        () => ({
+
+            let element = (id) => {
+
+                return document.getElementById(id);
+
+            }
+
+            //get Elements
+
+            let status = element('status');
+            let messages = element('messages');
+            let textarea = element('status');
+            let clearBtn = element('clear');
+
+        })();
+    </script>
 </body>
+
+
 
 </html>
