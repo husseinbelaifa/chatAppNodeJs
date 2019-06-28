@@ -15,7 +15,7 @@ mongo.connect("mongodb://localhost/mongochat", (err, db) => {
     //create a function to send status
 
     sendStatus = s => {
-      client.emit("status", s);
+      socket.emit("status", s);
     };
 
     //get chat from the collection
@@ -27,12 +27,12 @@ mongo.connect("mongodb://localhost/mongochat", (err, db) => {
       .toArray((err, res) => {
         if (err) throw err;
         //emit the messages
-        client.emit("input", res);
+        socket.emit("input", res);
       });
 
     //handle input events
 
-    client.on("input", data => {
+    socket.on("input", data => {
       let name = data.name;
       let message = data.message;
 
@@ -50,6 +50,16 @@ mongo.connect("mongodb://localhost/mongochat", (err, db) => {
           });
         });
       }
+    });
+
+    //handle clear
+
+    socket.on("clear", data => {
+      //remvoe all chat
+
+      chat.remove({}, () => {
+        socket.emit("cleared");
+      });
     });
   });
 });
