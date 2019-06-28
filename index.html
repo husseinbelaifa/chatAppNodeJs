@@ -67,6 +67,24 @@
             let textarea = element('status');
             let clearBtn = element('clear');
 
+            let statusDefault = status.textContent;
+
+            const setStatus = (s) => {
+
+                status.textContent = s;
+
+                if (s !== statusDefault) {
+                    const delay = setTimeout(() => {
+                        setStatus(statusDefault);
+                    }, 4000);
+                }
+
+            }
+
+
+
+
+
         })();
     </script>
 </body>
