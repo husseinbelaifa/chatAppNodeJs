@@ -51,7 +51,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.dev.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
 
     <script>
         (function () {
@@ -61,7 +61,7 @@
 
             var status = element('status');
             var messages = element('messages');
-            var textarea = element('status');
+            var textarea = element('textarea');
             var clearBtn = element('clear');
 
             var statusDefault = status.textContent;
@@ -80,15 +80,17 @@
 
             //connect to socket io
 
-            var socket = io.connect('http://localhost:4000');
+            var socket = io.connect('http://127.0.0.1:4000');
+            socket.on('connect', function (data) {
+                console.log('Connected to the websocket');
+            });
             console.log('socket');
             console.log(socket);
             //check for connection
 
             if (socket !== undefined) {
                 console.log('connected to socket...');
-                console.log('data');
-                //handle Outbut
+
                 socket.on('output', function (data) {
                     console.log('data');
                     console.log(data);
@@ -119,8 +121,12 @@
 
                 //handle input 
 
+
+
                 textarea.addEventListener('keydown', function (e) {
+
                     if (event.which === 13 && event.shiftKey === false) {
+                        console.log('event handler');
                         //emit to server the input 
                         socket.emit('input', {
                             name: username.value,
@@ -136,7 +142,13 @@
 
                 clearBtn.addEventListener('click', function (e) {
                     socket.emit('clear');
-                })
+                });
+
+                //clear Messages
+
+                socket.on('cleared', function () {
+                    messages.textContent = '';
+                });
 
 
 
