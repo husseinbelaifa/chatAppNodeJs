@@ -29,5 +29,27 @@ mongo.connect("mongodb://localhost/mongochat", (err, db) => {
         //emit the messages
         client.emit("input", res);
       });
+
+    //handle input events
+
+    client.on("input", data => {
+      let name = data.name;
+      let message = data.message;
+
+      if (name === "" || message === "") {
+        sendStatus("please enter a name and message");
+      } else {
+        //insert to database
+
+        chat.insert({ name: name, message: message }, () => {
+          client.emit("output", [data]);
+
+          sendStatus({
+            message: "Message sent",
+            clear: true
+          });
+        });
+      }
+    });
   });
 });
