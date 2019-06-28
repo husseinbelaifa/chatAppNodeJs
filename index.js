@@ -9,7 +9,7 @@ mongo.connect("mongodb://localhost/mongochat", (err, db) => {
   console.log("connected to mongodb");
 
   //connect to socket.io
-  client.on("connection", () => {
+  client.on("connection", socket => {
     let chat = db.collection("chats");
 
     //create a function to send status
